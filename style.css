@@ -1,0 +1,272 @@
+:root{
+    --main-bg-color: #db1f1f;
+    /*--border-color:*/
+    --container-width: 500px;
+}
+body,html{
+    background-color: #c2e7f8;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    
+}
+body,.drop-zone,.upload-container{
+    display: flex; /*for flexible display (it can be moved)  */ 
+    align-items: center; /*for centre in up and down */ 
+    justify-content: center; /*for centre left to right  */ 
+    flex-direction: column; /*sets the allignment to column*/
+    font-family: Arial, Helvetica, sans-serif;
+    /* flex-direction: row; */
+}
+body{
+    flex-direction: row;
+}
+.upload-container{
+    max-height: 90%;
+    height: auto;
+    background-color: aliceblue;
+    border: 2px dashed #ffffff;
+    border-radius: 10px;/* for curve at the corners*/
+    box-shadow:7px 18px 20px 0px #858889; /* giving box a shadow effect*/
+}
+.icon-container{
+    width: 75px;
+    height: 100px; /*as it is relative so if this line is not there it will overlap the words*/
+    position: relative;/* changes allignment according to the parent */
+}
+.drop-zone{
+    width: var(--container-width);
+    height: 300px;
+    border: 2px dashed ;
+    border-color: #a1c1e2; 
+    margin: 20px;
+    border-radius: 10px;/* for curve at the corners*/
+    transition: all 200ms ease;
+}
+
+.dragged.drop-zone{
+    background: #bfdeff;
+    border-color: #097af3;
+}
+.icon-container img{
+    width: 75px;
+    position: absolute; /* collects all the img at single point */
+    transform-origin: bottom; /*rotates from the bottom*/
+    transition: all 0.3s ease-in-out;/*for the trasition effect */
+}
+.icon-container .center{
+    z-index: 2;
+}
+.icon-container .right, .icon-container .left{/* including both left and right*/
+    height: 64px;
+    width: 56px;
+    filter: grayscale(.5); /*to make img gray */
+    
+    transform: scale(.9);
+}
+.dragged .icon-container .right{
+    transform: rotate(10deg) translateX(18px) scale(.9) ;/*transform=>rotates from the center of img , transform=>shifts the img*/
+    
+}
+.dragged .icon-container .left{
+    transform: rotate(-10deg) translateX(-18px) scale(.9);/*transform=>rotates from the center of img , transform=>shifts the img*/ 
+}
+.dragged .icon-container .center{
+    transform: translateY(-6px);/* to move up*/
+}
+#fileinput{
+    display: none;
+}
+.browsebtn{
+    color: #097af3;
+    cursor: pointer;
+}
+
+.progress-container{
+    width: var(--container-width);
+    height: 70px;
+    border: 2px solid #dcedff;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    position:relative;
+    display: none;
+}
+
+.progress-container .bg-progress{
+    background: #dcedff;
+    width : 0%;   /*increasing it using js to show it like animation*/
+    height: 100%;
+
+    border-radius: 2%;
+    transition: width .25s linear;
+    position: absolute;
+}
+
+.progress-container .inner{
+    position: absolute;
+    z-index: 1;
+    margin: 10px 15px;
+    opacity: 0.8;
+    width: calc(100% - 30px);
+}
+.progress-bar{
+    background-color: #097af3;
+    height: 3px;
+    width: 100%;
+    border-radius: 2px;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform .25s linear;
+}
+
+.sharing-container{
+    width: var(--container-width);
+    margin-bottom: 20px;
+    display: none;
+}
+
+p{
+    opacity: 0.7;
+    text-align: center;
+}
+
+.sharing-container .input-container{
+    position: relative;
+}
+
+.sharing-container .input-container input{
+    width: var(--container-width);
+    border: 2px dashed #a1c1e2;
+    border-radius: 3px;
+    padding: 10px 5px;
+    box-sizing: border-box;
+    font-size: 20px;
+    background: #d1eefa;
+    color: #0000008c;
+    
+}
+
+.input-container img{
+    position:absolute;
+    height:40px;
+    width: 40px;
+    right: 5px;
+    top: 4px;
+    cursor: pointer;
+}
+
+.email-container{
+    display: flex;
+    align-self: center;
+}
+
+.email-container form{
+    width:100%;
+    border: 2px solid #9dcafa;
+    border-radius: 5px;
+    padding: 5px;
+    display:flex;
+    align-self: center;
+    flex-direction: column;  /*set item column wise*/
+}
+.email-container .feild{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;   
+    width: 400px; 
+}
+.email-container label{
+    font-size: 18px;
+    margin-top: 4px;
+}
+.email-container input{
+    font-size: 18px;
+    border: none;
+    border-bottom: 2px solid ;
+    text-align: center;  
+    opacity: 0.8;
+}
+.email-container input:focus{   /*for removing the upper ans side border*/
+    outline: none;
+}
+.email-container button{
+    font-size: 18px;
+    padding: 8px 40px;
+    margin-top: 15px;
+    background: #d1e3f8;
+    border: none;
+    border-radius: 5px;
+    width: 200px;
+    align-self: center;
+    height: 40px;
+    cursor: pointer;
+}
+#receivername{
+    margin-top: 10px;
+}
+
+.toast{
+    position: absolute;
+    bottom:10px;
+    left: 50%;
+    transform: translate(-50%, 60px);
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: #097af3;
+    font-size: 18px;
+    color: #ffffff;
+    transition: transform ease-in-out 0.4s;
+    box-shadow: 8px 8px 2px 0.8px rgba(0, 0, 255, .2);
+
+}
+.show.toast {
+    transform: translate(50%, 0);
+  }
+
+.snd_btn:hover{
+    background: #2781e7;
+    box-shadow: 10px 5px 5px rgb(168, 224, 250);
+    transition: 0.4s ease-in-out;
+}
+
+.bgpic{ 
+    bottom:10px;
+    left: 50%;
+}
+
+.qrcode{
+    width: 450px;
+    height: 450px;
+    margin-left: 50px;
+    transition:opacity 10s linear;
+    color: #c2e7f8;
+    box-shadow:7px 18px 20px 0px color;
+}
+.qrt{
+    margin-top: 10px;
+    margin-left: 50px;
+    font-size: 22px;
+    display: none;
+    border-radius: 8px;
+    border: solid #b2b7fd ;
+    align-items: center;
+    padding-left: 100px;
+    background-color: #9ac9fd;
+}
+
+ @media screen and (max-width:900px)
+ {
+    :root{
+        --container-width: 320px;
+    }   .qrcode{
+        display: none;
+        }
+        .qrt{
+            display:none;
+        }
+        .email-container .feild{
+            flex-direction: column;
+            width: 300px;
+        }
+ }
